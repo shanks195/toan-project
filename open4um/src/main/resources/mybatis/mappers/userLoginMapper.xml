@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mappers.userLoginMapper">
+
+	<resultMap type="userLoginVO" id="userLoginResult">
+		<result property="userid" column="userid"/>
+		<result property="username" column="username"/>
+		<result property="password" column="password"/>
+		<result property="status" column="status"/>
+		<result property="roleid" column="roleid"/>
+		<result property="roleaccount_name" column="roleaccount_name"/>
+	</resultMap>
+	
+	<select id="selectLogin" resultMap="userLoginResult" parameterType="String">
+		<![CDATA[
+			SELECT
+				user.userid, user.username, user.password, user.status, role_user.roleid, role.roleaccount_name
+			FROM
+				role_user, role, user
+			WHERE
+				role_user.roleid = role.roleid
+			AND
+				role_user.userid = user.userid
+			AND
+				username = #{username}
+		]]>
+	</select>
+	
+</mapper>
